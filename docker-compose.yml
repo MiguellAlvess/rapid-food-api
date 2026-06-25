@@ -1,0 +1,15 @@
+services:
+  postgres:
+    container_name: rapid_food_postgre
+    restart: always
+    image: postgres:17.4
+    environment:
+      POSTGRES_PASSWORD: postgre
+      POSTGRES_USER: postgre
+      POSTGRES_DB: rapid_food_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - rapid-food-data:/var/lib/postgresql/data
+volumes:
+  rapid-food-data:

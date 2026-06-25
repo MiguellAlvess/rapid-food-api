@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rapid-food-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rapid_food_db?createDatabaseIfNotExist=true
+    password: postgre
+    username: postgre
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
