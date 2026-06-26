@@ -4,8 +4,8 @@ import br.com.db.rapid_food_api.order.domain.Order;
 import br.com.db.rapid_food_api.order.dto.OrderRequestDto;
 import br.com.db.rapid_food_api.order.dto.OrderResponseDto;
 import br.com.db.rapid_food_api.order.mapper.OrderMapper;
-import br.com.db.rapid_food_api.order.repository.OrderItemRepository;
 import br.com.db.rapid_food_api.order.repository.OrderRepository;
+import br.com.db.rapid_food_api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final UserService userService;
     private final OrderMapper orderMapper;
 
     @Transactional
     public OrderResponseDto createOrder(OrderRequestDto orderRequestDto) {
+        //User user = userService.getUserById(orderRequestDto.userId());
         log.info("OrderService client id {}", orderRequestDto.userId() );
         Order order = orderMapper.toEntity(orderRequestDto);
         Order savedOrder = orderRepository.save(order);
