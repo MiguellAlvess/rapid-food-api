@@ -23,7 +23,7 @@ public class UserService {
     @Transactional
     public UserResponse create(CreateUserRequest request) {
         if (userRepository.existsByEmail(request.email())) {
-            throw new EmailAlreadyExistsException("Já existe um usuário cadastrado com este e-mail");
+            throw new EmailAlreadyExistsException(request.email());
         }
         String passwordHash = passwordEncoder.encode(request.password());
         User user = userMapper.toEntity(request, passwordHash);
