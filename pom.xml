@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.db</groupId>
 	<artifactId>rapid-food-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>Se
 	<name>rapid-food-api</name>
 	<description/>
 	<url/>
@@ -77,6 +77,11 @@
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-validation</artifactId>
+	    </dependency>
+
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
 	    </dependency>
     </dependencies>
 
