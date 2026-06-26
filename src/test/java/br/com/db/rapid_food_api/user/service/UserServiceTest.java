@@ -17,6 +17,7 @@ import static br.com.db.rapid_food_api.user.common.UserConstants.CREATE_USER_REQ
 import static br.com.db.rapid_food_api.user.common.UserConstants.EMAIL;
 import static br.com.db.rapid_food_api.user.common.UserConstants.PASSWORD;
 import static br.com.db.rapid_food_api.user.common.UserConstants.PASSWORD_HASH;
+import static br.com.db.rapid_food_api.user.common.UserConstants.UPDATE_USER_REQUEST;
 import static br.com.db.rapid_food_api.user.common.UserConstants.USER_ID;
 import static br.com.db.rapid_food_api.user.common.UserConstants.createUser;
 import static br.com.db.rapid_food_api.user.common.UserConstants.createUserResponse;
@@ -103,5 +104,60 @@ class UserServiceTest {
                 assertThatThrownBy(() -> userService.getById(USER_ID))
                                 .isInstanceOf(UserNotFoundException.class)
                                 .hasMessage("User not found");
+        }
+
+        @Test
+        void shouldUpdateUserWithValidData() {
+                User user = createUser();
+
+                when(userRepository.findById(USER_ID))
+                                .thenReturn(Optional.of(user));
+                when(userRepository.existsByEmailAndIdNot(UPDATE_USER_REQUEST.email(), USER_ID))
+                                .thenReturn(false);
+                when(passwordEncoder.encode(UPDATE_USER_REQUEST.password()))
+                                .thenReturn(PASSWORD_HASH);
+                when(userRepository.save(any(User.class)))
+                                .thenAnswer(invocation -> invocation.getArgument(0));
+                when(userMapper.toResponse(any(User.class)))
+                                .thenAnswer(invocation -> {
+                                        User updatedUser = invocation.getArgument(0);
+                                        return new UserResponse(
+                                                        updatedUser.getId(),
+                                                        updatedUser.getName(),
+                                                        updatedUser.getEmail(),
+                                                        updatedUser.getActive(),
+                                                        updatedUser.getCreatedAt());
+                                });
+
+                UserResponse response = userService.update(USER_ID, UPDATE_USER_REQUEST);
+
+                assertThat(response).isNotNull();
+                assertThat(response.name()).isEqualTo(UPDATE_USER_REQUEST.name());
+                assertThat(response.email()).isEqualTo(UPDATE_USER_REQUEST.email());
+                assertThat(response.active()).isEqualTo(UPDATE_USER_REQUEST.active());
+        }
+
+        @Test
+        void shouldThrowResourceNotFoundExceptionWhenUpdatingNonExistingUser() {
+                when(userRepository.findById(USER_ID))
+                                .thenReturn(Optional.empty());
+
+                assertThatThrownBy(() -> userService.update(USER_ID, UPDATE_USER_REQUEST))
+                                .isInstanceOf(UserNotFoundException.class)
+                                .hasMessage("User not found");
+        }
+
+        @Test
+        void shouldThrowEmailAlreadyExistsExceptionWhenUpdatingUserWithExistingEmail() {
+                when(userRepository.findById(USER_ID))
+                                .thenReturn(Optional.of(createUser()));
+
+                when(userRepository.existsByEmailAndIdNot(UPDATE_USER_REQUEST.email(), USER_ID))
+                                .thenReturn(true);
+
+                assertThatThrownBy(() -> userService.update(USER_ID, UPDATE_USER_REQUEST))
+                                .isInstanceOf(EmailAlreadyExistsException.class)
+                                .hasMessage("Já existe um usuário cadastrado com o e-mail: "
+                                                + UPDATE_USER_REQUEST.email());
         }
 }

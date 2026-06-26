@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static br.com.db.rapid_food_api.user.common.UserConstants.CREATE_USER_REQUEST;
+import static br.com.db.rapid_food_api.user.common.UserConstants.UPDATE_USER_REQUEST;
 import static br.com.db.rapid_food_api.user.common.UserConstants.USER_ID;
 import static br.com.db.rapid_food_api.user.common.UserConstants.createUserResponse;
 import br.com.db.rapid_food_api.user.dto.UserResponse;
@@ -78,5 +80,41 @@ class UserControllerTest {
                                 .andExpect(jsonPath("$.name").value(response.name()))
                                 .andExpect(jsonPath("$.email").value(response.email()))
                                 .andExpect(jsonPath("$.active").value(response.active()));
+        }
+
+        @Test
+        void shouldUpdateUserWithValidData() throws Exception {
+                UserResponse response = new UserResponse(
+                                USER_ID,
+                                UPDATE_USER_REQUEST.name(),
+                                UPDATE_USER_REQUEST.email(),
+                                UPDATE_USER_REQUEST.active(),
+                                null);
+
+                when(userService.update(USER_ID, UPDATE_USER_REQUEST))
+                                .thenReturn(response);
+
+                mockMvc.perform(patch("/api/users/{id}", USER_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(UPDATE_USER_REQUEST)))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.id").value(USER_ID.toString()))
+                                .andExpect(jsonPath("$.name").value(UPDATE_USER_REQUEST.name()))
+                                .andExpect(jsonPath("$.email").value(UPDATE_USER_REQUEST.email()))
+                                .andExpect(jsonPath("$.active").value(UPDATE_USER_REQUEST.active()));
+        }
+
+        @Test
+        void shouldReturnBadRequestWhenUpdatingUserWithInvalidData() throws Exception {
+                mockMvc.perform(patch("/api/users/{id}", USER_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                                {
+                                                  "name": "Miguel",
+                                                  "email": "email-invalido",
+                                                  "password": "123"
+                                                }
+                                                """))
+                                .andExpect(status().isBadRequest());
         }
 }

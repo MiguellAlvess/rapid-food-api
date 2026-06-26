@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import br.com.db.rapid_food_api.user.domain.User;
 import br.com.db.rapid_food_api.user.dto.CreateUserRequest;
+import br.com.db.rapid_food_api.user.dto.UpdateUserRequest;
 import br.com.db.rapid_food_api.user.dto.UserResponse;
 
 public class UserConstants {
@@ -35,6 +36,12 @@ public class UserConstants {
                 true,
                 null);
     }
+
+    public static final UpdateUserRequest UPDATE_USER_REQUEST = new UpdateUserRequest(
+            "Miguel Atualizado",
+            "miguel.atualizado@email.com",
+            "123456789",
+            true);
 
     private UserConstants() {
     }
