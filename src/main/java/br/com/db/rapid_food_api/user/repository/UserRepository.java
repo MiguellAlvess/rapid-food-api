@@ -8,4 +8,6 @@ import br.com.db.rapid_food_api.user.domain.User;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByEmail(String email);
+
+    boolean existsByEmailAndIdNot(String email, UUID id);
 }
