@@ -1,4 +1,4 @@
-package br.com.db.rapid_food_api.vendors.domain.enums;
+package br.com.db.rapid_food_api.vendors.domain;
 
 import jakarta.persistence.*;
 import java.util.UUID;

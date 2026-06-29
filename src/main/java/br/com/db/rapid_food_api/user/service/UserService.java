@@ -1,11 +1,9 @@
 package br.com.db.rapid_food_api.user.service;
 
 import java.util.UUID;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import br.com.db.rapid_food_api.user.domain.User;
 import br.com.db.rapid_food_api.user.dto.CreateUserRequest;
 import br.com.db.rapid_food_api.user.dto.UpdateUserRequest;

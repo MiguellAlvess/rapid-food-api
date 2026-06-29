@@ -1,6 +1,6 @@
 package br.com.db.rapid_food_api.vendors.service;
 
-import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
+import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import br.com.db.rapid_food_api.vendors.exceptions.DuplicateVendorException;
 import br.com.db.rapid_food_api.vendors.exceptions.VendorNotFoundException;
 import br.com.db.rapid_food_api.vendors.repository.VendorRepository;
@@ -19,10 +19,9 @@ public class VendorService {
 
     @Transactional
     public Vendor create(Vendor vendor) {
-        log.info("Criando novo restaurante com CNPJ: {}", vendor.getCnpj()); // apagar dps
-
         if (vendorRepository.existsByCnpj(vendor.getCnpj())) {
-           throw new DuplicateVendorException("Já existe um restaurante cadastrado com o CNPJ: " + vendor.getCnpj());
+            log.warn("Tentativa de cadastro com CNPJ já existente: {}", vendor.getCnpj());
+            throw new DuplicateVendorException("CNPJ já cadastrado");
         }
 
         return vendorRepository.save(vendor);
