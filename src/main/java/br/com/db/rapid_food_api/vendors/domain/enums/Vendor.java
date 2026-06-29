@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity
 @Table(name = "vendors")
@@ -19,7 +18,7 @@ public class Vendor {
     @Column(nullable = false)
     private String name;
 
-    private CNPJ cnpj; // ou string - ver depois
+    private String cnpj;
 
     @Column(nullable = false)
     private Boolean active;
