@@ -1,5 +1,6 @@
 package br.com.db.rapid_food_api.product.domain;
 
+import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +20,10 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-//
-//    @ManyToOne
-//    private Vendor vendor;
+
+    @ManyToOne
+    private Vendor vendor;
+
     @Column(nullable = false)
     private String productName;
 

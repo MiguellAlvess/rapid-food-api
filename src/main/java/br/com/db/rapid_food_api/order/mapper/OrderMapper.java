@@ -14,6 +14,7 @@ import java.util.List;
 public interface OrderMapper {
 
     @Mapping(target = "userName", source = "user.name")
+    @Mapping(target = "vendorName", source = "vendor.name")
     OrderResponseDto toDtoResponse(Order order);
 
     List<OrderItem> toEntityOrderItems(List<OrderItemRequestDto> items);

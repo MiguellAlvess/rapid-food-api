@@ -2,6 +2,7 @@ package br.com.db.rapid_food_api.order.domain;
 
 import br.com.db.rapid_food_api.order.domain.enums.OrderStatus;
 import br.com.db.rapid_food_api.user.domain.User;
+import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,8 +43,8 @@ public class Order {
     @ManyToOne
     private User user;
 
-    //@ManyToOne
-    //private Vendor vendor;
+    @ManyToOne
+    private Vendor vendor;
 
     public Order() {
         init();

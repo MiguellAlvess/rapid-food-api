@@ -12,6 +12,8 @@ import br.com.db.rapid_food_api.product.repository.ProductRepository;
 import br.com.db.rapid_food_api.user.common.UserConstants;
 import br.com.db.rapid_food_api.user.domain.User;
 import br.com.db.rapid_food_api.user.repository.UserRepository;
+import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
+import br.com.db.rapid_food_api.vendors.repository.VendorRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,6 +58,8 @@ class OrderControllerTest {
     private OrderMapper orderMapper;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private VendorRepository vendorRepository;
 
     @BeforeEach
     void setUp() {
@@ -67,7 +71,8 @@ class OrderControllerTest {
     @DisplayName("Should create an order with valid data")
     void createOrder() throws Exception {
         User user = userRepository.save(UserConstants.createUser());
-        Product product = productRepository.save(FactoryHelper.createProduct());
+        Vendor vendor = vendorRepository.save(new Vendor());
+        Product product = productRepository.save(FactoryHelper.createProduct(vendor));
         OrderRequestDto orderRequestDto = FactoryHelper.createOrderRequest(user, product.getId());
 
         mockMvc.perform(post("/api/orders")
@@ -84,8 +89,9 @@ class OrderControllerTest {
     @DisplayName("Should cancel order with valid status")
     void cancelOrder() throws Exception {
         User user = userRepository.save(UserConstants.createUser());
+        Vendor vendor = vendorRepository.save(new Vendor());
         Order order = orderRepository.save(new Order(null, new BigDecimal("99.99"),
-         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user));
+         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user, vendor));
         mockMvc.perform(put("/api/orders/cancel/" + order.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(OrderStatus.CANCELED.name()))
@@ -97,8 +103,9 @@ class OrderControllerTest {
     @DisplayName("Should not cancel order with status PREPARING")
     void shouldNotCancelOrderPREPARING() throws Exception {
         User user = userRepository.save(UserConstants.createUser());
+        Vendor vendor = vendorRepository.save(new Vendor());
         Order order = orderRepository.save(new Order(null, new BigDecimal("99.99"),
-         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user));
+         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user, vendor));
         order.setStatus(OrderStatus.PREPARING);
         orderRepository.save(order);
 
@@ -111,8 +118,9 @@ class OrderControllerTest {
     @DisplayName("Should not cancel order with status DELIVERED")
     void shouldNotCancelOrderDELIVERED() throws Exception {
         User user = userRepository.save(UserConstants.createUser());
+        Vendor vendor = vendorRepository.save(new Vendor());
         Order order = orderRepository.save(new Order(null, new BigDecimal("99.99"),
-         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user));
+         OrderStatus.CREATED,LocalDateTime.now(),null, new ArrayList<>(), user, vendor));
         order.setStatus(OrderStatus.DELIVERED);
         orderRepository.save(order);
 

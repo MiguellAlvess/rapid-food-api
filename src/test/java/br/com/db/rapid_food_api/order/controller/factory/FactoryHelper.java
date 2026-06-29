@@ -5,6 +5,7 @@ import br.com.db.rapid_food_api.order.dto.OrderRequestDto;
 import br.com.db.rapid_food_api.product.domain.Product;
 import br.com.db.rapid_food_api.user.common.UserConstants;
 import br.com.db.rapid_food_api.user.domain.User;
+import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,8 +27,8 @@ public class FactoryHelper {
     }
 
 //    ============Products
-    public static Product createProduct(){
-        return new Product( null, "product", "descrption",
+    public static Product createProduct(Vendor vendor){
+        return new Product( null, vendor, "product", "descrption",
                         new BigDecimal("99.9"), null, null);
     }
 }
