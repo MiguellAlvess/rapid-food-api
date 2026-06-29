@@ -16,12 +16,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // TODO: Bloquear o acesso publico dps da auth for implementada
+
     @Bean
     public SecurityFilterChain filterRegistrationBean(HttpSecurity http) throws Exception {
         return http.sessionManagement(
                 sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(am -> {
                     am.anyRequest().permitAll();
+                    am.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                 }).build();
     }
 }
