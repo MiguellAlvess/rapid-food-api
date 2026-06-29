@@ -12,6 +12,8 @@ import br.com.db.rapid_food_api.user.mapper.UserMapper;
 import br.com.db.rapid_food_api.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -29,5 +31,9 @@ public class UserService {
         User user = userMapper.toEntity(request, passwordHash);
         User savedUser = userRepository.save(user);
         return userMapper.toResponse(savedUser);
+    }
+
+    public User findById(UUID id) {
+        return userRepository.findById(id).orElse(new User("nome", "email", "senha"));
     }
 }

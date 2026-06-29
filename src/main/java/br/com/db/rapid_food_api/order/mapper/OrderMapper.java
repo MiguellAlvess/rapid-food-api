@@ -4,6 +4,7 @@ import br.com.db.rapid_food_api.order.domain.Order;
 import br.com.db.rapid_food_api.order.domain.OrderItem;
 import br.com.db.rapid_food_api.order.dto.OrderItemRequestDto;
 import br.com.db.rapid_food_api.order.dto.OrderResponseDto;
+import br.com.db.rapid_food_api.order.dto.OrderStatusDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,4 +18,5 @@ public interface OrderMapper {
 
     List<OrderItem> toEntityOrderItems(List<OrderItemRequestDto> items);
 
+    OrderStatusDto toOrderStatus(Order order);
 }

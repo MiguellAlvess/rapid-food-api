@@ -6,5 +6,10 @@ public enum OrderStatus {
     ACCEPTED,
     PREPARING,
     DELIVERED,
-    CANCELED
+    CANCELED;
+
+    public boolean cantBeCancelled() {
+        return this == PREPARING || this == DELIVERED || this == CANCELED;
+    }
+
 }
