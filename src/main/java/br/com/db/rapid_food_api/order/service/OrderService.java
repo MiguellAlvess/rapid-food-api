@@ -62,7 +62,7 @@ public class OrderService {
 
         for (OrderItemRequestDto itemDto : orderRequestDto.items()) {
             Product product = productValidator.validate(itemDto.productId());
-            if(product.getVendor().getId() != orderRequestDto.vendorId()){
+            if(!product.getVendor().getId().equals(orderRequestDto.vendorId())){
                 throw new IllegalArgumentException("Invalid vendor id for item " + product.getId());
             }
             OrderItem orderItem = new OrderItem(product, itemDto.quantity());

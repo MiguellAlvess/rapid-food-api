@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record ProductRequestDto (
-        UUID vendoId,
+        UUID vendorId,
         String productName,
         String description,
         BigDecimal price

@@ -17,6 +17,7 @@ public interface ProductMapper {
     @Mapping(target = "id", ignore = true)
     Product toEntity(ProductRequestDto productRequestDto);
 
+    @Mapping(target = "vendorName", source = "product.vendor.name")
     ProductResponseDto toDto(Product product);
 
     void updateProduct(@MappingTarget Product product, ProductUpdateDto updateDto);
