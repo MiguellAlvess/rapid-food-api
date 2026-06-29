@@ -46,4 +46,20 @@ public class User {
         this.active = true;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void update(String name, String email, String passwordHash, Boolean active) {
+        if (name != null) {
+            this.name = name;
+        }
+        if (email != null) {
+            this.email = email;
+        }
+        if (passwordHash != null) {
+            this.passwordHash = passwordHash;
+        }
+        if (active != null) {
+            this.active = active;
+        }
+        this.updatedAt = LocalDateTime.now();
+    }
 }
