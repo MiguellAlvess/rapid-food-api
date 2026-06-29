@@ -7,6 +7,7 @@ import java.util.UUID;
 public record ProductResponseDto(
         UUID id,
         String vendoName,
+        String productName,
         BigDecimal price,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

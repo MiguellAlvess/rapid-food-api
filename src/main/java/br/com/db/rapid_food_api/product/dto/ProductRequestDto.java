@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public record ProductRequestDto (
         UUID vendoId,
+        String productName,
         String description,
         BigDecimal price
 ){

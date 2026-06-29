@@ -22,6 +22,9 @@ public class Product {
 //
 //    @ManyToOne
 //    private Vendor vendor;
+    @Column(nullable = false)
+    private String productName;
+
     @Column(length = 255, nullable = false)
     private String description;
 

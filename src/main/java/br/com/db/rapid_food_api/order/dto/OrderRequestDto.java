@@ -1,13 +1,20 @@
 package br.com.db.rapid_food_api.order.dto;
 
-import java.math.BigDecimal;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.UUID;
 
 public record OrderRequestDto(
+        @NotNull(message = "O ID de usuário é obrigatório")
         UUID userId,
+
+        @NotNull(message = "O ID do vendedor é obrigatório")
         UUID vendorId,
-        BigDecimal totalAmount,
+
+        @NotNull(message = "Informe os itens do pedido")
+        @Valid
         List<OrderItemRequestDto> items
 ) {
 }
