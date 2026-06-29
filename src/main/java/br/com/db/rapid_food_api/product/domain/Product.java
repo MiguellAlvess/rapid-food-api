@@ -1,6 +1,6 @@
 package br.com.db.rapid_food_api.product.domain;
 
-import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
+import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

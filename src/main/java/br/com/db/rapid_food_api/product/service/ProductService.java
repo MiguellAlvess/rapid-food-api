@@ -7,7 +7,7 @@ import br.com.db.rapid_food_api.product.dto.ProductUpdateDto;
 import br.com.db.rapid_food_api.product.exception.BusinessException;
 import br.com.db.rapid_food_api.product.mapper.ProductMapper;
 import br.com.db.rapid_food_api.product.repository.ProductRepository;
-import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
+import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import br.com.db.rapid_food_api.vendors.repository.VendorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -45,8 +45,8 @@ public class ProductService {
         return productMapper.toDto(product);
     }
 
-    public List<ProductResponseDto> getAllProducts() {
-        return productRepository.findAll() // precisa refatorar para findByVendorId;
+    public List<ProductResponseDto> getAllProducts(UUID vendorId) {
+        return productRepository.findAllByVendorId(vendorId) // precisa refatorar para findByVendorId;
                                 .stream().map(productMapper::toDto).toList();
     }
 

@@ -29,9 +29,9 @@ public class ProductController {
         return ResponseEntity.created(uri).body(responseDto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    @GetMapping("/{vendorId}")
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts(@PathVariable UUID vendorId) {
+        return ResponseEntity.ok(productService.getAllProducts(vendorId));
     }
 
     @PatchMapping("/{id}")
