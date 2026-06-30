@@ -51,9 +51,9 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponseDto updateProduct(@Valid ProductUpdateDto updateDto, UUID id) {
-        Vendor vendor = findVendorById(id);
-        Product product = findProduct(id);
+    public ProductResponseDto updateProduct(@Valid ProductUpdateDto updateDto, UUID vendorId) {
+        Vendor vendor = findVendorById(vendorId);
+        Product product = findProduct(updateDto.id());
         if (vendor.getId() != product.getVendor().getId()) {
             throw new BusinessException("This product is not owner of this vendor");
         }
