@@ -2,7 +2,7 @@ package br.com.db.rapid_food_api.user.repository.scenarios;
 
 public enum ExistsByEmailAndIdNotScenario {
     
-    EMAIL_EXISTS(
+    EMAIL_BELONGS_TO_ANOTHER_USER(
         "email is already registered",
         "miguel@gmail.com",
         true
@@ -14,15 +14,9 @@ public enum ExistsByEmailAndIdNotScenario {
         false
     ),
 
-    UPPERCASE_EMAIL(
-        "same email in uppercase returns false(case sensitive)",
-        "MIGUEL@EMAIL.COM",
-        false
-    ),
-
-    MIXED_CASE_EMAIL(
-        "same email in mixed case returns false (case sensitive)",
-        "Miguel@Email.Com",
+    SAME_EMAIL_BEING_UPDATED(
+        "email already belongs to the updated user",
+        "outro@gmail.com",
         false
     );
 

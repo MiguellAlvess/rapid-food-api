@@ -21,7 +21,7 @@ public class UserRepositoryIT extends RepositoryIntegrationTestBase {
 
     @BeforeEach
     void cleanDb(){
-        userRepository.deleteAll();;
+        userRepository.deleteAll();
     }
 
     @Nested
