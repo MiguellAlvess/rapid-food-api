@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.db.rapid_food_api.config.RepositoryIntegrationTestBase;
 import br.com.db.rapid_food_api.user.domain.User;
+import br.com.db.rapid_food_api.user.repository.scenarios.ExistsByEmailAndIdNotScenario;
 import br.com.db.rapid_food_api.user.repository.scenarios.ExistsByEmailScenario;
 
 public class UserRepositoryIT extends RepositoryIntegrationTestBase {
@@ -39,6 +40,22 @@ public class UserRepositoryIT extends RepositoryIntegrationTestBase {
             assertThat(result).isEqualTo(scenario.expectedResult);
         }
     }
+
+    @Nested
+    @DisplayName("Tests for ExistsByEmailAndIdNot")
+    class ExistsByEmailAndIdNot{
+
+        @ParameterizedTest(name = "{0}")
+        @EnumSource(ExistsByEmailAndIdNotScenario.class)
+        @DisplayName("Should return expected result")
+        void shouldReturnExpectedResult(ExistsByEmailAndIdNotScenario scenario){
+            User firstUser = userRepository.save(buildUser("miguel@gmail.com"));
+            User secondUser = userRepository.save(buildUser("outro@gmail.com"));
+
+            boolean result = userRepository.existsByEmailAndIdNot(scenario.updatedEmail, secondUser.getId());
+            assertThat(result).isEqualTo(scenario.expectedResult);
+    }
+}
 
     private User buildUser(String email) {
         return new User("Miguel Alves", email, "hash_senha");
