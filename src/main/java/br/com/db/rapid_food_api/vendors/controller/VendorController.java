@@ -3,7 +3,6 @@ package br.com.db.rapid_food_api.vendors.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import br.com.db.rapid_food_api.vendors.dto.CreateVendorRequest;
 import br.com.db.rapid_food_api.vendors.dto.VendorResponse;
