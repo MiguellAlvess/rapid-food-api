@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RapidFoodApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RapidFoodApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RapidFoodApiApplication.class, args);
+    }
 
 }

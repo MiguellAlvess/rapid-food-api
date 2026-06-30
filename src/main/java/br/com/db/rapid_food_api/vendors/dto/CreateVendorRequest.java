@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Payload para criação de um novo restaurante parceiro")
 public record CreateVendorRequest(
-        
+
         @Schema(description = "Nome de restaurante", example = "Pizzaria italiana")
         @NotBlank(message = "O nome do restaurante é obrigatório.")
         String name,

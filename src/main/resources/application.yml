@@ -1,32 +1,10 @@
 spring:
   application:
     name: rapid-food-api
-
   datasource:
-    url: jdbc:postgresql://localhost:5433/rapid_food_db
+    url: jdbc:postgresql://localhost:5432/rapid_food_db?createDatabaseIfNotExist=true
     password: postgre
     username: postgre
     driver-class-name: org.postgresql.Driver
-
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-  output:
-    ansi:
-      enabled: ALWAYS
-
-server:
-  port: 8080
-
-logging:
-  pattern:
-    console: "%clr(%d{HH:mm:ss}){cyan} | %clr(%-5level){highlight} | %clr(${spring.application.name}){magenta} | %clr(%logger{20}){yellow} | %msg%n"
-  level:
-    org.springframework: INFO
-    org.hibernate: ERROR
