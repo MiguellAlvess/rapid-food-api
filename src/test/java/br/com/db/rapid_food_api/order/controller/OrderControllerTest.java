@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -93,36 +95,26 @@ class OrderControllerTest {
                .andExpect(jsonPath("$.id").value(order.getId().toString())).andDo(print());
     }
 
-    @Test
-    @DisplayName("Should not cancel order with status PREPARING")
-    void shouldNotCancelOrderPREPARING() throws Exception {
+    @ParameterizedTest
+    @DisplayName("Should not cancel order with status ")
+    @EnumSource(value = OrderStatus.class, names = {"PREPARING", "DELIVERED", "CANCELED"})
+    void shouldNotCancelOrderWithInvalidStatuses(OrderStatus statusInvalido) throws Exception {
         User user = userRepository.save(UserConstants.createUser());
         Vendor vendor = vendorRepository.save(FactoryHelper.createVendor());
         Order order = orderRepository.save(FactoryHelper.createOrder(user, vendor));
 
-        order.setStatus(OrderStatus.PREPARING);
+        // Define o status dinamicamente com base no parâmetro do teste
+        order.setStatus(statusInvalido);
         orderRepository.save(order);
 
         var reasonRequestDto = new OrderCancelReasonDto("pedido atrasado");
 
-        mockMvc.perform(put("/api/orders/cancel/" + order.getId()).contentType(MediaType.APPLICATION_JSON).content(
-            cancelReasonDtoJson.write(reasonRequestDto).getJson())).andExpect(status().isBadRequest()).andDo(print());
-    }
-
-    @Test
-    @DisplayName("Should not cancel order with status DELIVERED")
-    void shouldNotCancelOrderDELIVERED() throws Exception {
-        User user = userRepository.save(UserConstants.createUser());
-        Vendor vendor = vendorRepository.save(FactoryHelper.createVendor());
-        Order order = orderRepository.save(FactoryHelper.createOrder(user, vendor));
-
-        order.setStatus(OrderStatus.DELIVERED);
-        orderRepository.save(order);
-
-        var reasonRequestDto = new OrderCancelReasonDto("pedido atrasado");
-
-        mockMvc.perform(put("/api/orders/cancel/" + order.getId()).contentType(MediaType.APPLICATION_JSON).content(
-            cancelReasonDtoJson.write(reasonRequestDto).getJson())).andExpect(status().isBadRequest()).andDo(print());
+        // 2. Act & Assert
+        mockMvc.perform(put("/api/orders/cancel/" + order.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(cancelReasonDtoJson.write(reasonRequestDto).getJson()))
+               .andExpect(status().isBadRequest())
+               .andDo(print());
     }
 
 }
