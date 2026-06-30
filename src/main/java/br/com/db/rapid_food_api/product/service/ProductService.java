@@ -27,9 +27,9 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final VendorRepository vendorRepository;
 
-    private Vendor findVendorById(UUID id){
+    private Vendor findVendorById(UUID id) {
         return vendorRepository.findById(id)
-           .orElseThrow(() -> new EntityNotFoundException("Vendor with id " + id + " not found"));
+                               .orElseThrow(() -> new EntityNotFoundException("Vendor with id " + id + " not found"));
     }
 
     private Product findProduct(UUID id) {

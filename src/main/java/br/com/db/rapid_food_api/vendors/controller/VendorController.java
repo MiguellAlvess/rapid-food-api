@@ -1,9 +1,5 @@
 package br.com.db.rapid_food_api.vendors.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import br.com.db.rapid_food_api.vendors.dto.CreateVendorRequest;
 import br.com.db.rapid_food_api.vendors.dto.VendorResponse;
@@ -17,11 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.UUID;
 
@@ -34,47 +28,47 @@ public class VendorController {
     private final VendorService vendorService;
     private final VendorMapper vendorMapper;
 
-    @Operation(summary = "Cadastrar um novo restaurante", description = "Cria um restaurante parceiro e o ativa por padrao.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados invalidos (ex: cnpj mal formatado)", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Conflito: cnpj já cadastrado", content = @Content)
-    })
+    @Operation(summary = "Cadastrar um novo restaurante", description = "Cria um restaurante parceiro e o ativa por " +
+                                                                        "padrao.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso"),
+                           @ApiResponse(responseCode = "400", description = "Dados invalidos (ex: cnpj mal formatado)"
+                               , content = @Content),
+                           @ApiResponse(responseCode = "409", description = "Conflito: cnpj já cadastrado", content =
+                           @Content)})
     @PostMapping
     public ResponseEntity<VendorResponse> create(@RequestBody @Valid CreateVendorRequest request) {
         Vendor vendorToSave = vendorMapper.toEntity(request);
         Vendor savedVendor = vendorService.create(vendorToSave);
         VendorResponse response = vendorMapper.toResponse(savedVendor);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.id())
-                .toUri();
+        URI location =
+            ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.id()).toUri();
 
         return ResponseEntity.created(location).body(response);
     }
 
-    @Operation(summary = "Buscar um restaurante pelo ID", description = "Retorna os detalhes de um restaurante especifico.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Restaurante encontrado"),
-            @ApiResponse(responseCode = "404", description = "Restaurante nao encontrado", content = @Content)
-    })
+    @Operation(summary = "Buscar um restaurante pelo ID", description = "Retorna os detalhes de um restaurante " +
+                                                                        "especifico.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Restaurante encontrado"),
+                           @ApiResponse(responseCode = "404", description = "Restaurante nao encontrado", content =
+                           @Content)})
     @GetMapping("/{id}")
     public ResponseEntity<VendorResponse> findById(@PathVariable UUID id) {
         Vendor vendor = vendorService.findById(id);
         return ResponseEntity.ok(vendorMapper.toResponse(vendor));
     }
 
-    @Operation(summary = "Inativar um restaurante", description = "Altera o status do restaurante para inativo. Não é possível inativar um restaurante já inativo.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Restaurante inativado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Restaurante não encontrado", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Conflito: Restaurante já está inativo", content = @Content)
-    })
+    @Operation(summary = "Inativar um restaurante", description = "Altera o status do restaurante para inativo. Não é" +
+                                                                  " possível inativar um restaurante já inativo.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Restaurante inativado com sucesso"),
+                           @ApiResponse(responseCode = "404", description = "Restaurante não encontrado", content =
+                           @Content),
+                           @ApiResponse(responseCode = "409", description = "Conflito: Restaurante já está inativo",
+                               content = @Content)})
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<Void> deactivate(@PathVariable UUID id) {
         vendorService.deactivate(id);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

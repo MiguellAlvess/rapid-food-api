@@ -1,9 +1,10 @@
 package br.com.db.rapid_food_api.order.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.UUID;
 
-public record OrderItemRequestDto(
-        Integer quantity,
-        UUID productId
-) {
+public record OrderItemRequestDto(@NotNull(message = "O ID do produto é obrigatório") UUID productId,
+
+                                  @NotNull(message = "A Quantidade é obrigatória") Integer quantity) {
 }

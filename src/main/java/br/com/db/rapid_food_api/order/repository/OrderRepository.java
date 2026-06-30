@@ -12,9 +12,9 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     @Query("""
-    SELECT o FROM Order o
-    where o.user.id = :userId
-    ORDER BY o.createdAt DESC
-    """)
+           SELECT o FROM Order o
+           where o.user.id = :userId
+           ORDER BY o.createdAt DESC
+           """)
     Page<Order> findAllByUserOrderedDesc(@Param("userId") UUID userId, Pageable pageable);
 }

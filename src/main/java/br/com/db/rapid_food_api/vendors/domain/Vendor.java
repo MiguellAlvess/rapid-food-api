@@ -1,9 +1,10 @@
 package br.com.db.rapid_food_api.vendors.domain;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "vendors")
@@ -23,7 +24,7 @@ public class Vendor {
     @Column(nullable = false)
     private Boolean active;
 
-    public  void deactivate() {
+    public void deactivate() {
         if (!this.active) {
             throw new IllegalStateException("Restaurante está inativo no momento");
         }

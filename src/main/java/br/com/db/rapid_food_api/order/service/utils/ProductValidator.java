@@ -14,8 +14,8 @@ public class ProductValidator {
 
     private final ProductRepository productRepository;
 
-    public Product validate(UUID productId){
+    public Product validate(UUID productId) {
         return productRepository.findById(productId).orElseThrow(
-                () -> new EntityNotFoundException("Poduct with id "+ productId + " not found"));
+            () -> new EntityNotFoundException("Poduct with id " + productId + " not found"));
     }
 }

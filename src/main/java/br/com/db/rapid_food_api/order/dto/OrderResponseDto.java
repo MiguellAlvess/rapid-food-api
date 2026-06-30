@@ -7,14 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record OrderResponseDto(
-        UUID id,
-        BigDecimal totalAmount,
-        String userName,
-        String vendorName,
-        OrderStatus status,
-        LocalDateTime createdAt,
-        List<OrderItemResponseDto> items
+public record OrderResponseDto(UUID id, BigDecimal totalAmount, String userName, String vendorName, OrderStatus status,
+                               LocalDateTime createdAt, List<OrderItemResponseDto> items
 
 ) {
 }

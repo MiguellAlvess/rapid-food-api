@@ -7,8 +7,6 @@ import java.math.BigDecimal;
 
 public class TotalAmountCalc {
     public static BigDecimal calculate(Order order) {
-        return order.getItems().stream()
-                               .map(OrderItem::getTotal)
-                               .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return order.getItems().stream().map(OrderItem::getTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

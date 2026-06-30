@@ -2,7 +2,7 @@ package br.com.db.rapid_food_api.order.domain;
 
 import br.com.db.rapid_food_api.order.domain.enums.OrderStatus;
 import br.com.db.rapid_food_api.user.domain.User;
-import br.com.db.rapid_food_api.vendors.domain.enums.Vendor;
+import br.com.db.rapid_food_api.vendors.domain.Vendor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +25,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(precision = 10, scale = 2 )
+    @Column(precision = 10, scale = 2)
     private BigDecimal totalAmount;
+
+    @Column
+    private String observation;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -50,7 +53,7 @@ public class Order {
         init();
     }
 
-    private void init(){
+    private void init() {
         this.status = OrderStatus.CREATED;
         this.createdAt = LocalDateTime.now();
         this.items = new ArrayList<>();

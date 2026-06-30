@@ -1,5 +1,6 @@
 package br.com.db.rapid_food_api.order.controller;
 
+import br.com.db.rapid_food_api.order.dto.OrderCancelReasonDto;
 import br.com.db.rapid_food_api.order.dto.OrderRequestDto;
 import br.com.db.rapid_food_api.order.dto.OrderResponseDto;
 import br.com.db.rapid_food_api.order.dto.OrderStatusDto;
@@ -36,13 +37,13 @@ public class OrderController {
     }
 
     @PutMapping("/cancel/{id}")
-    public ResponseEntity<OrderStatusDto> cancelOrder(@PathVariable UUID id) {
-        return ResponseEntity.ok(orderService.cancelOrder(id));
+    public ResponseEntity<OrderStatusDto> cancelOrder(@PathVariable UUID id,
+                                                      @RequestBody @Valid OrderCancelReasonDto reasonDto) {
+        return ResponseEntity.ok(orderService.cancelOrder(id, reasonDto));
     }
 
-    @GetMapping("/all/{userId}")
-    public ResponseEntity<Page<OrderResponseDto>> getAllOrders(@PathVariable UUID userId,
-                                                               Pageable pageable) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<Page<OrderResponseDto>> getAllOrders(@PathVariable UUID userId, Pageable pageable) {
         return ResponseEntity.ok(orderService.getOrders(userId, pageable));
     }
 }

@@ -41,7 +41,7 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrderItem(Product product, Integer quantity){
+    public OrderItem(Product product, Integer quantity) {
         this.product = product;
         this.productName = product.getProductName();
         this.price = product.getPrice();
