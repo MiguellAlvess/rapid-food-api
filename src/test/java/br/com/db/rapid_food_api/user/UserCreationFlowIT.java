@@ -78,4 +78,32 @@ public class UserCreationFlowIT extends IntegrationTestBase{
 
         assertThat(userRepository.findAll()).isEmpty();
     }
+
+    @Test
+    void shouldReturn500WhenEmailAlreadyExistsInDb(){
+        CreateUserRequest request = UserConstants.CREATE_USER_REQUEST;
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+        .when()
+            .post("api/users")
+        .then()
+            .statusCode(201)
+            .body("id", notNullValue())
+            .body("name", equalTo("Miguel Alves"))
+            .body("active", equalTo(true));
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+        .when()
+            .post("api/users")
+        .then()
+            .statusCode(500);
+            //.body("message", equalTo("Já existe um usuário cadastrado com o e-mail: miguel@gmail.com"));
+
+        var savedUsers = userRepository.findAll();
+        assertThat(savedUsers).hasSize(1);
+    }
 }
