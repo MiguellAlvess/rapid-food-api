@@ -7,6 +7,27 @@ public enum ExistsByEmailScenario {
         "miguel@email.com",
         "miguel@email.com",
         true
+    ),
+
+    EMAIL_DOESNT_EXIST(
+        "email isn't registered",
+        "miguel@email.com",
+        "teste@email.com",
+        false
+    ),
+
+    UPPERCASE_EMAIL(
+        "same email in uppercase returns false(case sensitive)",
+        "miguel@gmail.com",
+        "MIGUEL@EMAIL.COM",
+        false
+    ),
+
+    MIXED_CASE_EMAIL(
+        "same email in mixed case returns false (case sensitive)",
+        "miguel@email.com",
+        "Miguel@Email.Com",
+        false
     );
 
     public final String description;
