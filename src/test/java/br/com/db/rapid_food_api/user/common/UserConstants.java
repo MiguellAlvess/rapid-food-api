@@ -13,6 +13,7 @@ public class UserConstants {
 
     public static final String NAME = "Miguel Alves";
     public static final String EMAIL = "miguel@email.com";
+    public static final String INVALID_EMAIL = "invalid-email";
     public static final String PASSWORD = "123456";
     public static final String PASSWORD_HASH = "$2a$10$hashedPassword";
 
@@ -20,6 +21,11 @@ public class UserConstants {
             NAME,
             EMAIL,
             PASSWORD);
+
+    public static final CreateUserRequest CREATER_USER_REQUEST_WITH_INVALID_EMAIL = new CreateUserRequest(
+                NAME, 
+                INVALID_EMAIL,
+                PASSWORD);
 
     public static User createUser() {
         return new User(

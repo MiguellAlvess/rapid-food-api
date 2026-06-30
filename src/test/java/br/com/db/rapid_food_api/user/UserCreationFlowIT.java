@@ -62,4 +62,20 @@ public class UserCreationFlowIT extends IntegrationTestBase{
         assertThat(savedUsers.get(0).getName()).isNotEqualTo("123456");
         assertThat(savedUsers.get(0).getActive()).isEqualTo(true);
     }
+
+    @Test
+    void shouldReturn400WhenEmailIsInvalid(){
+
+        CreateUserRequest request = UserConstants.CREATER_USER_REQUEST_WITH_INVALID_EMAIL;
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+        .when()
+            .post("api/users")
+        .then()
+            .statusCode(400); 
+
+        assertThat(userRepository.findAll()).isEmpty();
+    }
 }
