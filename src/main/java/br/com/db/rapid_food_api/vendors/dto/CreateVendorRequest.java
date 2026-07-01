@@ -1,6 +1,8 @@
 package br.com.db.rapid_food_api.vendors.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +12,7 @@ public record CreateVendorRequest(
 
         @Schema(description = "Nome de restaurante", example = "Pizzaria italiana")
         @NotBlank(message = "O nome do restaurante é obrigatório.")
+        @Size(max = 150)
         String name,
 
         @Schema(description = "CNPJ válido do restaurante (Apenas números)", example = "06990590000123")

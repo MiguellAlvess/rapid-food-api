@@ -22,7 +22,7 @@ public class VendorTestFactory {
     }
 
     public static Vendor createVendor(){
-        return new Vendor(DEFAULT_NAME, DEFAULT_CNPJ);
+        return new Vendor(null, DEFAULT_NAME, DEFAULT_CNPJ, true);
     }
 
     public static CreateVendorRequest createValidRequest() {

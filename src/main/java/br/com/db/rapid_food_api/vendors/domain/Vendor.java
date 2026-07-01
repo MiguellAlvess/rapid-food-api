@@ -2,6 +2,8 @@ package br.com.db.rapid_food_api.vendors.domain;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Vendor {
 
     @Id
@@ -31,11 +34,5 @@ public class Vendor {
         }
 
         this.active = false;
-    }
-
-    public Vendor (String name, String cnpj){
-        this.name = name;
-        this.cnpj = cnpj;
-        this.active = true;
     }
 }
