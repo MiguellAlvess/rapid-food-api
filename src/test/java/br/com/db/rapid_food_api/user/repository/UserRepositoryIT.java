@@ -49,7 +49,7 @@ public class UserRepositoryIT extends RepositoryIntegrationTestBase {
         @EnumSource(ExistsByEmailAndIdNotScenario.class)
         @DisplayName("Should return expected result")
         void shouldReturnExpectedResult(ExistsByEmailAndIdNotScenario scenario){
-            User firstUser = userRepository.save(buildUser("miguel@gmail.com"));
+            userRepository.save(buildUser("miguel@gmail.com"));
             User secondUser = userRepository.save(buildUser("outro@gmail.com"));
 
             boolean result = userRepository.existsByEmailAndIdNot(scenario.updatedEmail, secondUser.getId());
