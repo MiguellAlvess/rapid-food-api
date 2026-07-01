@@ -4,7 +4,8 @@ services:
     restart: always
     image: postgres:17.4
     environment:
-      POSTGRES_PASSWORD: postgre
+    # TODO: depois esconder
+      POSTGRES_PASSWORD: postgre 
       POSTGRES_USER: postgre
       POSTGRES_DB: rapid_food_db
     ports:
@@ -28,5 +29,16 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  api:
+    container_name: rapid_food_api
+    build: . 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rapid_food_db
+      SPRING_DATASOURCE_USERNAME: postgre
+      SPRING_DATASOURCE_PASSWORD: postgre
 volumes:
   rapid-food-data:
