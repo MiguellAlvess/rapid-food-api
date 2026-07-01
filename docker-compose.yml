@@ -4,12 +4,24 @@ services:
     restart: always
     image: postgres:17.4
     environment:
-      POSTGRES_PASSWORD: postgre
+    # TODO: depois esconder
+      POSTGRES_PASSWORD: postgre 
       POSTGRES_USER: postgre
       POSTGRES_DB: rapid_food_db
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - rapid-food-data:/var/lib/postgresql/data
+  api:
+    container_name: rapid_food_api
+    build: . 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rapid_food_db
+      SPRING_DATASOURCE_USERNAME: postgre
+      SPRING_DATASOURCE_PASSWORD: postgre
 volumes:
   rapid-food-data:

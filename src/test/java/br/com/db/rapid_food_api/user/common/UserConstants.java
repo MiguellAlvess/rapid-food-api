@@ -1,11 +1,11 @@
 package br.com.db.rapid_food_api.user.common;
 
-import java.util.UUID;
-
 import br.com.db.rapid_food_api.user.domain.User;
 import br.com.db.rapid_food_api.user.dto.CreateUserRequest;
 import br.com.db.rapid_food_api.user.dto.UpdateUserRequest;
 import br.com.db.rapid_food_api.user.dto.UserResponse;
+
+import java.util.UUID;
 
 public class UserConstants {
 
@@ -17,10 +17,7 @@ public class UserConstants {
     public static final String PASSWORD = "123456";
     public static final String PASSWORD_HASH = "$2a$10$hashedPassword";
 
-    public static final CreateUserRequest CREATE_USER_REQUEST = new CreateUserRequest(
-            NAME,
-            EMAIL,
-            PASSWORD);
+    public static final CreateUserRequest CREATE_USER_REQUEST = new CreateUserRequest(NAME, EMAIL, PASSWORD);
 
     public static final CreateUserRequest CREATER_USER_REQUEST_WITH_INVALID_EMAIL = new CreateUserRequest(
                 NAME, 
@@ -28,26 +25,15 @@ public class UserConstants {
                 PASSWORD);
 
     public static User createUser() {
-        return new User(
-                NAME,
-                EMAIL,
-                PASSWORD_HASH);
+        return new User(NAME, EMAIL, PASSWORD_HASH);
     }
 
     public static UserResponse createUserResponse() {
-        return new UserResponse(
-                USER_ID,
-                NAME,
-                EMAIL,
-                true,
-                null);
+        return new UserResponse(USER_ID, NAME, EMAIL, true, null);
     }
 
-    public static final UpdateUserRequest UPDATE_USER_REQUEST = new UpdateUserRequest(
-            "Miguel Atualizado",
-            "miguel.atualizado@email.com",
-            "123456789",
-            true);
+    public static final UpdateUserRequest UPDATE_USER_REQUEST =
+        new UpdateUserRequest("Miguel Atualizado", "miguel.atualizado@email.com", "123456789", true);
 
     private UserConstants() {
     }
