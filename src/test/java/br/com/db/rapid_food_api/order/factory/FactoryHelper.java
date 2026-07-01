@@ -46,6 +46,14 @@ public class FactoryHelper {
         );
     }
 
+    public static Order createOrderWithNullId(){
+         return new Order(
+            null, DEFAULT_PRICE, null, OrderStatus.CREATED,
+            LocalDateTime.now(), null, new ArrayList<>(), UserConstants.createUser(),
+            VendorTestFactory.createValidVendor()
+        );
+    }
+
     public static OrderItemResponseDto createValidItemResponse() {
         return new OrderItemResponseDto(
             DEFAULT_PRODUCT_ID,
