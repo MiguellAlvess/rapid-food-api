@@ -33,7 +33,7 @@ public class UserRepositoryIT extends RepositoryIntegrationTestBase {
         @DisplayName("Should return expected result")
         void shouldReturnExpectedResult(ExistsByEmailScenario scenario){
             
-            userRepository.save(buildUser(scenario.persistEmail));
+            userRepository.saveAndFlush(buildUser(scenario.persistEmail));
 
             boolean result = userRepository.existsByEmail(scenario.queryEmail);
 
@@ -49,8 +49,8 @@ public class UserRepositoryIT extends RepositoryIntegrationTestBase {
         @EnumSource(ExistsByEmailAndIdNotScenario.class)
         @DisplayName("Should return expected result")
         void shouldReturnExpectedResult(ExistsByEmailAndIdNotScenario scenario){
-            userRepository.save(buildUser("miguel@gmail.com"));
-            User secondUser = userRepository.save(buildUser("outro@gmail.com"));
+            userRepository.saveAndFlush(buildUser("miguel@gmail.com"));
+            User secondUser = userRepository.saveAndFlush(buildUser("outro@gmail.com"));
 
             boolean result = userRepository.existsByEmailAndIdNot(scenario.updatedEmail, secondUser.getId());
             assertThat(result).isEqualTo(scenario.expectedResult);
