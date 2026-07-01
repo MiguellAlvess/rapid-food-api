@@ -21,6 +21,10 @@ public class VendorTestFactory {
         return vendor;
     }
 
+    public static Vendor createVendor(){
+        return new Vendor(DEFAULT_NAME, DEFAULT_CNPJ);
+    }
+
     public static CreateVendorRequest createValidRequest() {
         return new CreateVendorRequest(DEFAULT_NAME, DEFAULT_CNPJ);
     }
