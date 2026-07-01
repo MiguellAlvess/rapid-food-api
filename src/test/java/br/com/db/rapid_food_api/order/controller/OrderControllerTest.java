@@ -56,8 +56,8 @@ class OrderControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(request)))
                .andExpect(status().isCreated())
-               .andExpect(jsonPath("$.userName").value(UserConstants.NAME)) // "Miguel Alves"
-               .andExpect(jsonPath("$.vendorName").value(VendorTestFactory.DEFAULT_NAME)) // "Google Brasil"
+               .andExpect(jsonPath("$.userName").value(UserConstants.NAME))
+               .andExpect(jsonPath("$.vendorName").value(VendorTestFactory.DEFAULT_NAME))
                .andExpect(jsonPath("$.items[0].productName").value(FactoryHelper.DEFAULT_PRODUCT_NAME))
                .andDo(print());
     }

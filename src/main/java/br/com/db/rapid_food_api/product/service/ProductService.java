@@ -37,6 +37,7 @@ public class ProductService {
                                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
     }
 
+    @Transactional
     public ProductResponseDto createProduct(@Valid ProductRequestDto requestDto) {
         Product product = productMapper.toEntity(requestDto);
         Vendor vendor = findVendorById(requestDto.vendorId());
@@ -60,5 +61,12 @@ public class ProductService {
         productMapper.updateProduct(product, updateDto);
         product.setUpdatedAt(LocalDateTime.now());
         return productMapper.toDto(product);
+    }
+
+    @Transactional
+    public void deleteProduct(UUID vendorId, UUID productId) {
+        Vendor vendor = findVendorById(vendorId);
+        Product product = findProduct(productId);
+        productRepository.delete(product);
     }
 }
